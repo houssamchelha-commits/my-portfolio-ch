@@ -20,14 +20,14 @@ $skills = [
 
 $projects = [
     [
-        "title" => "Mawjoud Marketplace",
-        "description" => "A modern marketplace concept designed to help users discover relevant listings with an intelligent search experience.",
+        "title" => "DEAL ",
+        "description" => "A modern marketplace concept designed to help users discover relevant listings.",
         "tags" => ["PHP", "MySQL", "JavaScript"],
         "icon" => "🛍️"
     ],
     [
-        "title" => "Student Management App",
-        "description" => "A responsive web application for managing students, profiles, and basic academic data.",
+        "title" => "Ateliers-Module Aproche Agile",
+        "description" => "Des Ateliers Modèle en cascade et Agile Scrum.",
         "tags" => ["HTML", "CSS", "PHP"],
         "icon" => "🎓"
     ],
@@ -361,6 +361,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                             <?php foreach ($project["tags"] as $tag): ?>
                                 <span class="tag"><?= htmlspecialchars($tag) ?></span>
                             <?php endforeach; ?>
+                            <a href="m202.php" class="tag" style="background:var(--primary);color:#fff">View project →</a>
                         </div>
                     </article>
                 <?php endforeach; ?>
