@@ -18,34 +18,6 @@ $skills = [
     ["name" => "Git / GitHub", "level" => 65]
 ];
 
-$ateliers = [
-    [
-        "title" => "Gestion de projet : Méthodes classiques",
-        "description" => "Support de l'atelier sur les méthodes classiques de gestion de projet.",
-        "url" => "https://portfoliofs202.vercel.app/docs/At1_gestionprojet.pdf"
-    ],
-    [
-        "title" => "Gestion de projet : Agile Scrum",
-        "description" => "Support de l'atelier sur le framework Agile Scrum.",
-        "url" => "https://portfoliofs202.vercel.app/docs/At2_gestionprojet.pdf"
-    ],
-    [
-        "title" => "Les bases de Git",
-        "description" => "Support de l'atelier sur les bases de Git.",
-        "url" => "https://portfoliofs202.vercel.app/docs/At3_git.pdf"
-    ],
-    [
-        "title" => "GitHub",
-        "description" => "Support de l'atelier sur GitHub.",
-        "url" => "https://portfoliofs202.vercel.app/docs/At4_github.pdf"
-    ],
-    [
-        "title" => "Git (exemple EFM)",
-        "description" => "Support de l'atelier sur Git avec un exemple EFM.",
-        "url" => null
-    ]
-];
-
 $formSubmitted = false;
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $formSubmitted = true;
@@ -189,15 +161,6 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         .skill-meta{display:flex;justify-content:space-between;font-size:13px;font-weight:700;margin-bottom:8px}
         .track{height:8px;border-radius:999px;background:#eceef5;overflow:hidden}
         .fill{height:100%;border-radius:inherit;background:linear-gradient(90deg,var(--primary),var(--accent))}
-        .ateliers{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
-        .atelier{padding:24px;border-radius:22px;border:1px solid var(--line);background:#fff;transition:.25s}
-        .atelier:hover{transform:translateY(-6px);box-shadow:var(--shadow)}
-        .atelier-number{font-size:12px;text-transform:uppercase;letter-spacing:.1em;color:var(--primary-dark);font-weight:800}
-        .atelier h3{font-size:19px;line-height:1.35;margin:14px 0 8px}
-        .atelier p{font-size:14px;color:var(--muted);min-height:45px}
-        .atelier-link{display:inline-flex;margin-top:18px;color:var(--primary-dark);font-size:13px;font-weight:800}
-        .atelier-link:hover{text-decoration:underline}
-        .atelier-link.unavailable{color:var(--muted);font-weight:600}
         .tags{display:flex;gap:7px;flex-wrap:wrap;margin-top:16px}
         .tag{font-size:11px;font-weight:800;padding:7px 9px;border-radius:999px;background:#f5f5fa;color:#555b6e}
         .journey{
@@ -260,7 +223,6 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         }
         @media(max-width:900px){
             .hero-grid,.about-grid,.journey,.contact{grid-template-columns:1fr}
-            .ateliers{grid-template-columns:1fr 1fr}
             .hero{padding-top:65px}.hero-card{max-width:470px;margin:auto}
         }
         @media(max-width:650px){
@@ -271,7 +233,6 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
             section{padding:65px 0}
             .section-head{display:block}
             .section-text{margin-top:11px}
-            .ateliers{grid-template-columns:1fr}
             .stats{grid-template-columns:1fr 1fr 1fr}
             .card,form,.contact-info{padding:23px}
             .footer-inner{flex-direction:column;align-items:flex-start}
@@ -381,21 +342,14 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                 </p>
             </div>
 
-            <div class="ateliers">
-                <?php foreach ($ateliers as $index => $atelier): ?>
-                    <article class="atelier reveal">
-                        <span class="atelier-number">Atelier <?= $index + 1 ?></span>
-                        <h3><?= htmlspecialchars($atelier["title"]) ?></h3>
-                        <p><?= htmlspecialchars($atelier["description"]) ?></p>
-                        <?php if ($atelier["url"]): ?>
-                            <a class="atelier-link" href="<?= htmlspecialchars($atelier["url"]) ?>" target="_blank" rel="noopener noreferrer">
-                                Télécharger le PDF ↗
-                            </a>
-                        <?php else: ?>
-                            <span class="atelier-link unavailable">PDF non fourni</span>
-                        <?php endif; ?>
-                    </article>
-                <?php endforeach; ?>
+            <div class="card reveal">
+                <h3>Retrouvez tous les ateliers et leurs ressources.</h3>
+                <p>
+                    Gestion de projet, Agile Scrum, Git et GitHub : les supports sont réunis sur la page dédiée aux ateliers.
+                </p>
+                <a class="btn primary" href="m202.php#portfolio-ateliers" style="margin-top:20px">
+                    Découvrir les ateliers ↗
+                </a>
             </div>
         </div>
     </section>

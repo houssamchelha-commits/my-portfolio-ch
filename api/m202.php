@@ -99,6 +99,39 @@ $ateliers = [
     ],
 ];
 
+$portfolioAteliers = [
+    [
+        'icon' => '📋',
+        'title' => 'Gestion de projet : Méthodes classiques',
+        'description' => "Support de l'atelier sur les méthodes classiques de gestion de projet.",
+        'url' => 'https://portfoliofs202.vercel.app/docs/At1_gestionprojet.pdf',
+    ],
+    [
+        'icon' => '🔄',
+        'title' => 'Gestion de projet : Agile Scrum',
+        'description' => "Support de l'atelier sur le framework Agile Scrum.",
+        'url' => 'https://portfoliofs202.vercel.app/docs/At2_gestionprojet.pdf',
+    ],
+    [
+        'icon' => '⌨️',
+        'title' => 'Les bases de Git',
+        'description' => "Support de l'atelier sur les bases de Git.",
+        'url' => 'https://portfoliofs202.vercel.app/docs/At3_git.pdf',
+    ],
+    [
+        'icon' => '🐙',
+        'title' => 'GitHub',
+        'description' => "Support de l'atelier sur GitHub.",
+        'url' => 'https://portfoliofs202.vercel.app/docs/At4_github.pdf',
+    ],
+    [
+        'icon' => '🎓',
+        'title' => 'Git (exemple EFM)',
+        'description' => "Support de l'atelier sur Git avec un exemple EFM.",
+        'url' => null,
+    ],
+];
+
 $sources = [
     ["Module M202 – OFPPT", $links['ofppt']],
     ["Approche Agile OFPPT (SlideShare)", $links['slideshare']],
@@ -571,6 +604,38 @@ $sources = [
                         <?php endforeach; ?>
                     </ul>
                 </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="portfolio-ateliers">
+        <div class="container">
+            <div class="section-head reveal">
+                <div>
+                    <div class="kicker">Ateliers du portfolio</div>
+                    <h2>Gestion de projet, Git &amp; GitHub.</h2>
+                </div>
+                <p class="section-text">Retrouvez les supports des ateliers suivis pendant ma formation.</p>
+            </div>
+
+            <div class="grid grid-3">
+                <?php foreach ($portfolioAteliers as $index => $atelier): ?>
+                    <article class="project reveal">
+                        <div class="project-icon"><?= htmlspecialchars($atelier['icon']) ?></div>
+                        <div class="num">Atelier <?= $index + 1 ?></div>
+                        <h3><?= htmlspecialchars($atelier['title']) ?></h3>
+                        <p><?= htmlspecialchars($atelier['description']) ?></p>
+                        <div class="tags links-row">
+                            <?php if ($atelier['url']): ?>
+                                <a href="<?= htmlspecialchars($atelier['url']) ?>" class="tag link" target="_blank" rel="noopener noreferrer">
+                                    Télécharger le PDF →
+                                </a>
+                            <?php else: ?>
+                                <span class="tag">PDF non fourni</span>
+                            <?php endif; ?>
+                        </div>
+                    </article>
+                <?php endforeach; ?>
             </div>
         </div>
     </section>
