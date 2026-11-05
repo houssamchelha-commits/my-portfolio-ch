@@ -417,6 +417,7 @@ $sources = [
         /* Sections */
         section{padding:92px 0}
         .section-head{display:flex;justify-content:space-between;align-items:end;gap:25px;margin-bottom:35px}
+        .section-actions{display:flex;justify-content:flex-end;margin:-18px 0 24px}
         .kicker{font-size:12px;text-transform:uppercase;letter-spacing:.13em;color:var(--primary-dark);font-weight:800}
         h2{margin-top:7px;font-size:clamp(30px,4vw,46px);letter-spacing:-1.8px;line-height:1.1}
         .section-text{max-width:480px;color:var(--muted);font-size:15px}
@@ -603,6 +604,7 @@ $sources = [
             section{padding:65px 0}
             .section-head{display:block}
             .section-text{margin-top:11px}
+            .section-actions{justify-content:flex-start;margin:-14px 0 22px}
             .grid-3,.grid-4{grid-template-columns:1fr}
             .card{padding:23px}
             .footer-inner{flex-direction:column;align-items:flex-start}
@@ -820,6 +822,10 @@ $sources = [
                 <p class="section-text">Chaque atelier est accompagné de ses liens de ressources.</p>
             </div>
 
+            <div class="section-actions reveal">
+                <a class="btn" href="#portfolio-ateliers">Voir les documents des ateliers ↓</a>
+            </div>
+
             <div class="grid grid-3">
                 <?php foreach ($ateliers as $at): ?>
                     <article class="project reveal">
@@ -884,6 +890,10 @@ $sources = [
                     <h2>Gestion de projet, Git &amp; GitHub.</h2>
                 </div>
                 <p class="section-text">Retrouvez les supports des ateliers suivis pendant ma formation.</p>
+            </div>
+
+            <div class="section-actions reveal">
+                <a class="btn" href="#ateliers">Retour aux ateliers Agile ↑</a>
             </div>
 
             <div class="grid grid-3">
