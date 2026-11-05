@@ -71,7 +71,16 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         .logo{
             display:flex;align-items:center;gap:10px;font-weight:800;letter-spacing:-.5px;
         }
-        .logo-image{display:block;width:62px;height:62px;object-fit:contain}
+        .logo-image{
+            display:block;width:60px;height:60px;object-fit:cover;
+            border:1px solid rgba(255,255,255,.55);border-radius:16px;
+            box-shadow:0 6px 18px rgba(118,87,255,.22);
+            transition:transform .2s ease,box-shadow .2s ease;
+        }
+        .logo:hover .logo-image{
+            transform:translateY(-1px);
+            box-shadow:0 9px 22px rgba(118,87,255,.3);
+        }
         .links{display:flex;gap:28px;font-size:14px;color:#555b6e;font-weight:600}
         .links a{transition:.2s}
         .links a:hover{color:var(--primary)}
