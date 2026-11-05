@@ -495,13 +495,24 @@ $sources = [
         .reveal{opacity:0;transform:translateY(18px);transition:.65s ease}
         .reveal.visible{opacity:1;transform:none}
 
-        .btn,.nav-cta,.tag.link,.socials a{
+        .btn,.nav-cta,.tag.link,.socials a,.theme-toggle,.menu{
             position:relative;isolation:isolate;border-radius:999px;
+        }
+        .btn,.nav-cta,.tag.link,.socials a{
             border:1px solid rgba(255,255,255,.78);
-            background:linear-gradient(145deg,rgba(255,255,255,.72),rgba(255,255,255,.24) 52%,rgba(255,255,255,.48));
             backdrop-filter:blur(16px) saturate(155%);-webkit-backdrop-filter:blur(16px) saturate(155%);
             box-shadow:inset 0 1px 1px rgba(255,255,255,.82),inset 0 -1px 2px rgba(118,87,255,.08),0 6px 18px rgba(76,53,113,.12);
             transition:transform .22s ease,box-shadow .22s ease,background .22s ease;
+        }
+        .btn::before,.nav-cta::before,.tag.link::before,.socials a::before,.theme-toggle::before,.menu::before{
+            content:"";position:absolute;inset:-2px;padding:2px;border-radius:inherit;pointer-events:none;
+            background:linear-gradient(180deg,rgba(255,255,255,.96),rgba(255,255,255,.52) 20%,rgba(255,255,255,.08) 48%,rgba(50,45,60,.24) 78%,rgba(255,255,255,.82));
+            -webkit-mask:linear-gradient(#fff 0 0) content-box,linear-gradient(#fff 0 0);
+            -webkit-mask-composite:xor;mask-composite:exclude;
+            filter:drop-shadow(0 2px 3px rgba(35,28,48,.18));
+        }
+        .btn,.nav-cta,.tag.link,.socials a,.theme-toggle,.menu{
+            box-shadow:inset 0 2px 2px rgba(255,255,255,.78),inset 0 -2px 3px rgba(45,35,60,.16),0 0 0 1px rgba(255,255,255,.38),0 6px 18px rgba(76,53,113,.12);
         }
         .btn.primary,.nav-cta,.tag.link{
             color:#fff;border-color:rgba(255,255,255,.62);
@@ -519,7 +530,7 @@ $sources = [
         }
         .theme-toggle,.menu{
             backdrop-filter:blur(14px) saturate(155%);-webkit-backdrop-filter:blur(14px) saturate(155%);
-            box-shadow:inset 0 1px 1px rgba(255,255,255,.8),0 5px 14px rgba(76,53,113,.12);
+            transition:transform .22s ease,box-shadow .22s ease;
         }
         .btn:focus-visible,.nav-cta:focus-visible,.tag.link:focus-visible,
         .socials a:focus-visible,.theme-toggle:focus-visible,.menu:focus-visible{
@@ -529,12 +540,12 @@ $sources = [
         :root[data-theme="dark"] .socials a{
             color:var(--text);border-color:rgba(255,255,255,.2);
             background:linear-gradient(145deg,rgba(255,255,255,.16),rgba(255,255,255,.035) 52%,rgba(190,157,255,.1));
-            box-shadow:inset 0 1px 1px rgba(255,255,255,.18),0 6px 18px rgba(0,0,0,.2);
+            box-shadow:inset 0 2px 2px rgba(255,255,255,.24),inset 0 -2px 3px rgba(0,0,0,.3),0 0 0 1px rgba(255,255,255,.16),0 6px 18px rgba(0,0,0,.2);
         }
         :root[data-theme="dark"] .btn:not(.primary){
             color:var(--text);border-color:rgba(255,255,255,.2);
             background:linear-gradient(145deg,rgba(255,255,255,.16),rgba(255,255,255,.035) 52%,rgba(190,157,255,.1));
-            box-shadow:inset 0 1px 1px rgba(255,255,255,.18),0 6px 18px rgba(0,0,0,.2);
+            box-shadow:inset 0 2px 2px rgba(255,255,255,.24),inset 0 -2px 3px rgba(0,0,0,.3),0 0 0 1px rgba(255,255,255,.16),0 6px 18px rgba(0,0,0,.2);
         }
         :root[data-theme="dark"] .btn.primary,
         :root[data-theme="dark"] .nav-cta,
@@ -545,7 +556,7 @@ $sources = [
         :root[data-theme="dark"] .btn:hover,
         :root[data-theme="dark"] .socials a:hover{box-shadow:inset 0 1px 2px rgba(255,255,255,.22),0 10px 24px rgba(0,0,0,.3)}
         :root[data-theme="dark"] .theme-toggle,
-        :root[data-theme="dark"] .menu{box-shadow:inset 0 1px 1px rgba(255,255,255,.16),0 5px 14px rgba(0,0,0,.24)}
+        :root[data-theme="dark"] .menu{box-shadow:inset 0 2px 2px rgba(255,255,255,.2),inset 0 -2px 3px rgba(0,0,0,.3),0 0 0 1px rgba(255,255,255,.14),0 5px 14px rgba(0,0,0,.24)}
 
         .cat-cursor{
             position:fixed;top:0;left:0;z-index:1000;width:38px;height:38px;
