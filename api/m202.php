@@ -340,33 +340,79 @@ $sources = [
         .btn.primary{background:var(--primary);border-color:var(--primary);color:#fff}
         .btn:hover{transform:translateY(-3px);box-shadow:0 12px 25px rgba(28,32,53,.10)}
         .hero-card{
+            --tilt-x:0deg;--tilt-y:0deg;--glow-x:50%;--glow-y:50%;
             position:relative;padding:16px;border-radius:32px;
-            background:linear-gradient(160deg,#fff,#f4f1ff);
-            box-shadow:var(--shadow);border:1px solid rgba(255,255,255,.9);
+            background:linear-gradient(150deg,rgba(255,255,255,.94),rgba(244,235,255,.9));
+            box-shadow:0 28px 65px rgba(100,67,140,.18),inset 0 1px 0 rgba(255,255,255,.9);
+            border:1px solid rgba(255,255,255,.9);transform-style:preserve-3d;
+            transition:transform .35s cubic-bezier(.2,.75,.25,1),box-shadow .35s ease;
+            will-change:transform;
+        }
+        .hero-card::before{
+            content:"";position:absolute;inset:0;border-radius:inherit;pointer-events:none;
+            background:radial-gradient(circle at var(--glow-x) var(--glow-y),rgba(255,255,255,.72),transparent 42%);
+            opacity:.8;transition:opacity .3s ease;
+        }
+        .hero-card.reveal.visible{
+            transform:perspective(1100px) rotateX(var(--tilt-x)) rotateY(var(--tilt-y));
+            animation:hero-card-float 7s ease-in-out infinite;
+        }
+        @keyframes hero-card-float{
+            0%,100%{transform:perspective(1100px) rotateX(var(--tilt-x)) rotateY(var(--tilt-y)) translateY(0)}
+            50%{transform:perspective(1100px) rotateX(var(--tilt-x)) rotateY(var(--tilt-y)) translateY(-9px)}
         }
         .portrait{
             aspect-ratio:4/5;border-radius:24px;display:grid;place-items:center;
             background:
                 linear-gradient(145deg,rgba(118,87,255,.88),rgba(255,143,183,.65)),
                 linear-gradient(45deg,#eef0ff,#fff);
-            overflow:hidden;position:relative;
+            overflow:hidden;position:relative;transform:translateZ(14px);transform-style:preserve-3d;
+            box-shadow:inset 0 0 45px rgba(255,255,255,.18);
         }
-        .portrait::before,.portrait::after{content:"";position:absolute;border-radius:50%;filter:blur(4px)}
-        .portrait::before{width:180px;height:180px;background:rgba(255,255,255,.2);top:12%;left:-12%}
-        .portrait::after{width:220px;height:220px;background:rgba(255,255,255,.16);bottom:-10%;right:-8%}
+        .portrait::before,.portrait::after{content:"";position:absolute;border-radius:50%;filter:blur(4px);transform:translateZ(18px)}
+        .portrait::before{width:180px;height:180px;background:rgba(255,255,255,.2);top:12%;left:-12%;animation:portrait-orb 9s ease-in-out infinite alternate}
+        .portrait::after{width:220px;height:220px;background:rgba(255,255,255,.16);bottom:-10%;right:-8%;animation:portrait-orb 11s ease-in-out -3s infinite alternate-reverse}
+        @keyframes portrait-orb{
+            from{transform:translate3d(-8px,8px,18px) scale(.96)}
+            to{transform:translate3d(12px,-12px,28px) scale(1.06)}
+        }
         .avatar{
             width:150px;height:150px;border-radius:50%;
             background:rgba(255,255,255,.22);border:1px solid rgba(255,255,255,.45);
             display:grid;place-items:center;font-size:44px;font-weight:800;color:white;
-            box-shadow:0 18px 40px rgba(44,24,86,.18);backdrop-filter:blur(12px);z-index:2;
+            box-shadow:0 18px 40px rgba(44,24,86,.18),inset 0 2px 12px rgba(255,255,255,.35);
+            backdrop-filter:blur(12px);z-index:2;transform:translateZ(48px);
+            animation:avatar-bob 5s ease-in-out infinite;
+        }
+        @keyframes avatar-bob{
+            0%,100%{transform:translate3d(0,0,48px) rotate(-3deg)}
+            50%{transform:translate3d(0,-7px,48px) rotate(3deg)}
         }
         .floating{
             position:absolute;z-index:4;background:rgba(255,255,255,.92);
             padding:13px 15px;border:1px solid rgba(255,255,255,.9);
             border-radius:16px;box-shadow:0 18px 38px rgba(20,20,40,.13);
-            font-size:12px;font-weight:800;
+            font-size:12px;font-weight:800;transform:translateZ(64px);
         }
-        .f1{left:-15px;top:18%}.f2{right:-15px;top:60%}
+        .f1{left:-15px;top:18%;animation:badge-bob 5.2s ease-in-out -1s infinite}
+        .f2{right:-15px;top:60%;animation:badge-bob 6s ease-in-out -2.5s infinite reverse}
+        @keyframes badge-bob{
+            0%,100%{transform:translate3d(0,0,64px) rotate(-2deg)}
+            50%{transform:translate3d(0,-8px,64px) rotate(2deg)}
+        }
+        :root[data-theme="dark"] .hero-card{
+            background:linear-gradient(150deg,rgba(48,40,59,.96),rgba(37,31,50,.94));
+            border-color:rgba(255,255,255,.16);
+            box-shadow:0 28px 65px rgba(0,0,0,.32),inset 0 1px 0 rgba(255,255,255,.12);
+        }
+        :root[data-theme="dark"] .hero-card::before{background:radial-gradient(circle at var(--glow-x) var(--glow-y),rgba(255,255,255,.13),transparent 42%)}
+        :root[data-theme="dark"] .hero-card .floating{
+            color:var(--text);background:rgba(43,36,55,.94);border-color:rgba(255,255,255,.15);
+        }
+        @media(hover:hover) and (pointer:fine) and (prefers-reduced-motion:no-preference){
+            .hero-card.reveal.visible:hover{box-shadow:0 36px 75px rgba(100,67,140,.24),inset 0 1px 0 rgba(255,255,255,.9)}
+            :root[data-theme="dark"] .hero-card.reveal.visible:hover{box-shadow:0 36px 75px rgba(0,0,0,.42),inset 0 1px 0 rgba(255,255,255,.15)}
+        }
 
         /* Sections */
         section{padding:92px 0}
@@ -504,6 +550,10 @@ $sources = [
                 background:rgba(34,30,44,.94);
                 box-shadow:0 12px 32px rgba(0,0,0,.32);
             }
+        }
+        @media(prefers-reduced-motion:reduce){
+            .hero-card.reveal.visible,.portrait::before,.portrait::after,.avatar,.floating{animation:none}
+            .hero-card{transition:none;will-change:auto}
         }
     </style>
 </head>
@@ -824,6 +874,30 @@ $sources = [
     }, { threshold: 0.12 });
 
     document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+    const heroCard = document.querySelector('.hero-card');
+    const supportsCardTilt = window.matchMedia(
+        '(hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference)'
+    ).matches;
+    if (heroCard && supportsCardTilt) {
+        heroCard.addEventListener('pointermove', event => {
+            if (event.pointerType !== 'mouse') return;
+
+            const bounds = heroCard.getBoundingClientRect();
+            const x = (event.clientX - bounds.left) / bounds.width;
+            const y = (event.clientY - bounds.top) / bounds.height;
+            heroCard.style.setProperty('--tilt-x', `${(0.5 - y) * 10}deg`);
+            heroCard.style.setProperty('--tilt-y', `${(x - 0.5) * 12}deg`);
+            heroCard.style.setProperty('--glow-x', `${x * 100}%`);
+            heroCard.style.setProperty('--glow-y', `${y * 100}%`);
+        });
+        heroCard.addEventListener('pointerleave', () => {
+            heroCard.style.setProperty('--tilt-x', '0deg');
+            heroCard.style.setProperty('--tilt-y', '0deg');
+            heroCard.style.setProperty('--glow-x', '50%');
+            heroCard.style.setProperty('--glow-y', '50%');
+        });
+    }
 
     const menuBtn = document.getElementById('menuBtn');
     const navLinks = document.getElementById('navLinks');
