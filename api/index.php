@@ -51,10 +51,40 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
             font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
             color:var(--text);
             background:
-                radial-gradient(circle at 10% 0%, rgba(118,87,255,.12), transparent 28%),
-                radial-gradient(circle at 90% 8%, rgba(255,143,183,.14), transparent 25%),
-                var(--bg);
+                radial-gradient(ellipse at 12% 18%, rgba(255,143,183,.34), transparent 35%),
+                radial-gradient(ellipse at 88% 20%, rgba(177,143,255,.3), transparent 38%),
+                radial-gradient(ellipse at 50% 72%, rgba(255,211,235,.28), transparent 42%),
+                linear-gradient(135deg,#fff8fc 0%,#fbf5ff 48%,#f3edff 100%);
+            background-attachment:fixed;
             line-height:1.6;
+        }
+        .ambient-decor{position:fixed;inset:0;z-index:0;overflow:hidden;pointer-events:none}
+        .ambient-flower{
+            position:absolute;display:block;color:#db579f;
+            font-size:clamp(20px,2.4vw,32px);line-height:1;
+            opacity:.2;filter:drop-shadow(0 5px 12px rgba(217,67,137,.2));
+            animation:ambient-drift var(--duration,30s) ease-in-out var(--delay,0s) infinite alternate;
+            will-change:transform,opacity;
+        }
+        .ambient-flower:nth-child(1){top:14%;left:7%;--duration:27s;--delay:-8s}
+        .ambient-flower:nth-child(2){top:65%;left:17%;--duration:34s;--delay:-19s}
+        .ambient-flower:nth-child(3){top:24%;right:12%;--duration:31s;--delay:-13s}
+        .ambient-flower:nth-child(4){top:76%;right:9%;--duration:29s;--delay:-4s}
+        .ambient-flower:nth-child(5){top:44%;left:46%;--duration:36s;--delay:-24s}
+        .ambient-flower:nth-child(6){top:9%;right:37%;--duration:33s;--delay:-16s}
+        .ambient-flower:nth-child(7){top:88%;left:62%;--duration:30s;--delay:-11s}
+        .ambient-flower:nth-child(8){top:51%;right:31%;--duration:38s;--delay:-28s}
+        @keyframes ambient-drift{
+            0%{opacity:.1;transform:translate3d(-12px,14px,0) rotate(-12deg) scale(.9)}
+            50%{opacity:.28}
+            100%{opacity:.16;transform:translate3d(20px,-24px,0) rotate(12deg) scale(1.08)}
+        }
+        main,footer{position:relative;z-index:1}
+        @media(max-width:650px){
+            .ambient-flower{font-size:19px;opacity:.14}
+        }
+        @media(prefers-reduced-motion:reduce){
+            .ambient-flower{animation:none;opacity:.12;will-change:auto}
         }
         a{text-decoration:none;color:inherit}
         img{max-width:100%;display:block}
@@ -262,6 +292,17 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     </style>
 </head>
 <body>
+
+<div class="ambient-decor" aria-hidden="true">
+    <span class="ambient-flower">˚🌷͙֒🎀</span>
+    <span class="ambient-flower">˚🌷͙֒🎀</span>
+    <span class="ambient-flower">˚🌷͙֒🎀</span>
+    <span class="ambient-flower">˚🌷͙֒🎀</span>
+    <span class="ambient-flower">˚🌷͙֒🎀</span>
+    <span class="ambient-flower">˚🌷͙֒🎀</span>
+    <span class="ambient-flower">˚🌷͙֒🎀</span>
+    <span class="ambient-flower">˚🌷͙֒🎀</span>
+</div>
 
 <nav class="nav">
     <div class="container nav-inner">
