@@ -104,31 +104,31 @@ $portfolioAteliers = [
         'icon' => '📋',
         'title' => 'Gestion de projet : Méthodes classiques',
         'description' => "Support de l'atelier sur les méthodes classiques de gestion de projet.",
-        'url' => 'https://portfoliofs202.vercel.app/docs/At1_gestionprojet.pdf',
+        'url' => '/documents/at1.pdf',
     ],
     [
         'icon' => '🔄',
         'title' => 'Gestion de projet : Agile Scrum',
         'description' => "Support de l'atelier sur le framework Agile Scrum.",
-        'url' => 'https://portfoliofs202.vercel.app/docs/At2_gestionprojet.pdf',
+        'url' => '/documents/at2.docx',
     ],
     [
         'icon' => '⌨️',
         'title' => 'Les bases de Git',
         'description' => "Support de l'atelier sur les bases de Git.",
-        'url' => 'https://portfoliofs202.vercel.app/docs/At3_git.pdf',
+        'url' => '/documents/at3.docx',
     ],
     [
         'icon' => '🐙',
         'title' => 'GitHub',
         'description' => "Support de l'atelier sur GitHub.",
-        'url' => 'https://portfoliofs202.vercel.app/docs/At4_github.pdf',
+        'url' => '/documents/at4.docx',
     ],
     [
         'icon' => '🎓',
         'title' => 'Git (exemple EFM)',
         'description' => "Support de l'atelier sur Git avec un exemple EFM.",
-        'url' => null,
+        'url' => '/documents/at5.docx',
     ],
 ];
 
@@ -905,8 +905,8 @@ $sources = [
                         <p><?= htmlspecialchars($atelier['description']) ?></p>
                         <div class="tags links-row">
                             <?php if ($atelier['url']): ?>
-                                <a href="<?= htmlspecialchars($atelier['url']) ?>" class="tag link" target="_blank" rel="noopener noreferrer">
-                                    Télécharger le PDF →
+                                <a href="<?= htmlspecialchars($atelier['url']) ?>" class="tag link" download>
+                                    Télécharger le document →
                                 </a>
                             <?php else: ?>
                                 <span class="tag">PDF non fourni</span>
