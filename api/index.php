@@ -30,6 +30,15 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="Chaimae Zraouti — OFPPT Développement Digital Full Stack trainee portfolio.">
     <title><?= htmlspecialchars($profile["name"]) ?> | Full Stack Developer</title>
+    <script>
+        try {
+            if (localStorage.getItem('portfolio-theme') === 'dark') {
+                document.documentElement.dataset.theme = 'dark';
+            }
+        } catch (error) {
+            console.warn('Could not load the saved theme preference.', error);
+        }
+    </script>
     <style>
         :root{
             --bg:#f7f8fc;
@@ -44,6 +53,18 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
             --shadow:0 18px 50px rgba(27,31,56,.09);
             --radius:24px;
             --max:1160px;
+        }
+        :root[data-theme="dark"]{
+            color-scheme:dark;
+            --bg:#17151e;
+            --surface:rgba(35,31,45,.88);
+            --surface-solid:#231f2d;
+            --text:#f7f0fa;
+            --muted:#c0b5c8;
+            --line:rgba(255,255,255,.13);
+            --primary:#7657ff;
+            --primary-dark:#d0c3ff;
+            --shadow:0 18px 50px rgba(0,0,0,.28);
         }
         *{box-sizing:border-box;margin:0;padding:0}
         html{scroll-behavior:smooth}
@@ -86,6 +107,53 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         @media(prefers-reduced-motion:reduce){
             .ambient-flower{animation:none;opacity:.12;will-change:auto}
         }
+        :root[data-theme="dark"] body{
+            background:
+                radial-gradient(ellipse at 12% 18%,rgba(180,92,145,.2),transparent 35%),
+                radial-gradient(ellipse at 88% 20%,rgba(112,82,180,.22),transparent 38%),
+                radial-gradient(ellipse at 50% 72%,rgba(109,60,98,.16),transparent 42%),
+                linear-gradient(135deg,#17151e 0%,#1d1926 48%,#191725 100%);
+        }
+        :root[data-theme="dark"] .ambient-flower{opacity:.13;filter:drop-shadow(0 5px 12px rgba(217,67,137,.12))}
+        :root[data-theme="dark"] .nav-inner{
+            border-color:rgba(255,255,255,.12);
+            background:rgba(34,30,44,.78);
+            box-shadow:0 10px 35px rgba(0,0,0,.24);
+        }
+        :root[data-theme="dark"] .links{color:#e1d7e8;background:transparent;box-shadow:none}
+        :root[data-theme="dark"] .links a:hover{background:rgba(255,143,183,.13)}
+        :root[data-theme="dark"] .theme-toggle,
+        :root[data-theme="dark"] .menu{
+            color:#f6d5e8;border-color:rgba(255,143,183,.24);background:rgba(255,255,255,.07);
+        }
+        :root[data-theme="dark"] .card,
+        :root[data-theme="dark"] .hero-card,
+        :root[data-theme="dark"] .stat,
+        :root[data-theme="dark"] form,
+        :root[data-theme="dark"] .sources a,
+        :root[data-theme="dark"] .socials a,
+        :root[data-theme="dark"] .btn:not(.primary),
+        :root[data-theme="dark"] .floating{
+            color:var(--text);background:var(--surface);border-color:var(--line);
+        }
+        :root[data-theme="dark"] .tag{color:#e7dff0;background:rgba(255,255,255,.09)}
+        :root[data-theme="dark"] .track{background:rgba(255,255,255,.12)}
+        :root[data-theme="dark"] .timeline::before{background:rgba(255,255,255,.18)}
+        :root[data-theme="dark"] .step::before{box-shadow:0 0 0 5px rgba(182,162,255,.15)}
+        :root[data-theme="dark"] .field label{color:#ded3e4}
+        :root[data-theme="dark"] input,
+        :root[data-theme="dark"] textarea{color:var(--text);background:#1b1823;border-color:var(--line)}
+        :root[data-theme="dark"] input::placeholder,
+        :root[data-theme="dark"] textarea::placeholder{color:#96899f}
+        :root[data-theme="dark"] footer{border-color:var(--line)}
+        :root[data-theme="dark"] .nav-cta{color:#fff}
+        .theme-toggle{
+            flex:none;width:40px;height:40px;display:grid;place-items:center;
+            border:1px solid rgba(217,67,137,.16);border-radius:50%;
+            color:#a3467b;background:rgba(255,255,255,.72);
+            font-size:19px;line-height:1;cursor:pointer;transition:transform .2s,background .2s;
+        }
+        .theme-toggle:hover{transform:translateY(-2px);background:rgba(255,255,255,.95)}
         a{text-decoration:none;color:inherit}
         img{max-width:100%;display:block}
         .container{width:min(92%,var(--max));margin-inline:auto}
@@ -289,6 +357,13 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
             .card,form,.contact-info{padding:23px}
             .footer-inner{flex-direction:column;align-items:flex-start}
         }
+        @media(max-width:650px){
+            :root[data-theme="dark"] .links{
+                border-color:rgba(255,255,255,.12);
+                background:rgba(34,30,44,.94);
+                box-shadow:0 12px 32px rgba(0,0,0,.32);
+            }
+        }
     </style>
 </head>
 <body>
@@ -316,6 +391,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
             <a href="#journey">Journey</a>
         </div>
         <a href="#contact" class="nav-cta">Let's talk</a>
+        <button class="theme-toggle" id="themeToggle" type="button" aria-label="Switch to dark mode" title="Switch to dark mode">☾</button>
         <button class="menu" id="menuBtn" aria-label="Open menu" aria-controls="navLinks" aria-expanded="false">☰</button>
     </div>
 </nav>
@@ -557,6 +633,27 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         navLinks.classList.remove('open');
         menuBtn.setAttribute('aria-expanded', 'false');
     }));
+
+    const themeToggle = document.getElementById('themeToggle');
+    const themeRoot = document.documentElement;
+    const updateThemeToggle = () => {
+        const isDark = themeRoot.dataset.theme === 'dark';
+        themeToggle.textContent = isDark ? '☀' : '☾';
+        themeToggle.setAttribute('aria-label', `Switch to ${isDark ? 'light' : 'dark'} mode`);
+        themeToggle.setAttribute('aria-pressed', String(isDark));
+        themeToggle.title = `Switch to ${isDark ? 'light' : 'dark'} mode`;
+    };
+    updateThemeToggle();
+    themeToggle.addEventListener('click', () => {
+        const nextTheme = themeRoot.dataset.theme === 'dark' ? 'light' : 'dark';
+        themeRoot.dataset.theme = nextTheme;
+        try {
+            localStorage.setItem('portfolio-theme', nextTheme);
+        } catch (error) {
+            console.warn('Could not save the theme preference.', error);
+        }
+        updateThemeToggle();
+    });
 
     const catCursor = document.querySelector('.cat-cursor');
     const supportsCustomCursor = window.matchMedia(
