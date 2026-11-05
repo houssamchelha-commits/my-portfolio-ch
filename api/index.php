@@ -71,11 +71,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         .logo{
             display:flex;align-items:center;gap:10px;font-weight:800;letter-spacing:-.5px;
         }
-        .logo-mark{
-            font-size:22px;font-weight:850;letter-spacing:-1px;
-            background:linear-gradient(90deg,var(--primary),#b44dff,var(--accent));
-            -webkit-background-clip:text;background-clip:text;color:transparent;
-        }
+        .logo-image{display:block;width:62px;height:62px;object-fit:contain}
         .links{display:flex;gap:28px;font-size:14px;color:#555b6e;font-weight:600}
         .links a{transition:.2s}
         .links a:hover{color:var(--primary)}
@@ -243,7 +239,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 <nav class="nav">
     <div class="container nav-inner">
         <a href="#home" class="logo">
-            <span class="logo-mark">Chaimae.</span>
+            <img class="logo-image" src="/images/chaimae.png" alt="Chaimae Zraouti">
         </a>
         <div class="links">
             <a href="#about">About</a>
