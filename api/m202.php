@@ -181,15 +181,19 @@ $sources = [
 
         /* Navigation */
         .nav{
-            position:sticky;top:0;z-index:50;
-            backdrop-filter:blur(18px);
-            background:rgba(247,248,252,.76);
-            border-bottom:1px solid rgba(231,233,240,.75);
+            position:sticky;top:10px;z-index:50;padding:10px 0 0;
+            background:transparent;border:0;
         }
-        .nav-inner{height:76px;display:flex;align-items:center;justify-content:space-between}
-        .logo{display:flex;align-items:center;gap:10px;font-weight:800;letter-spacing:-.5px}
+        .nav-inner{
+            position:relative;width:min(92%,1020px);height:72px;padding:0 14px;
+            display:flex;align-items:center;justify-content:space-between;gap:14px;
+            border:1px solid rgba(255,255,255,.85);border-radius:999px;
+            background:rgba(255,255,255,.68);backdrop-filter:blur(20px);
+            box-shadow:0 10px 35px rgba(80,45,105,.11);
+        }
+        .logo{display:flex;align-items:center;gap:10px;flex:none;font-weight:800;letter-spacing:-.5px}
         .logo-image{
-            display:block;width:60px;height:60px;object-fit:cover;
+            display:block;width:56px;height:56px;object-fit:cover;
             border:1px solid rgba(255,255,255,.55);border-radius:16px;
             box-shadow:0 6px 18px rgba(118,87,255,.22);
             transition:transform .2s ease,box-shadow .2s ease;
@@ -198,15 +202,20 @@ $sources = [
             transform:translateY(-1px);
             box-shadow:0 9px 22px rgba(118,87,255,.3);
         }
-        .links{display:flex;gap:28px;font-size:14px;color:#555b6e;font-weight:600}
-        .links a{transition:.2s}
-        .links a:hover{color:var(--primary)}
+        .links{display:flex;align-items:center;gap:4px;font-size:14px;color:#555b6e;font-weight:600}
+        .links a{padding:9px 12px;border-radius:999px;transition:.2s}
+        .links a:hover{color:var(--primary);background:rgba(255,143,183,.14)}
         .nav-cta{
-            padding:11px 17px;border-radius:13px;color:#fff;font-size:14px;font-weight:700;
-            background:var(--text);transition:.2s;
+            flex:none;padding:10px 17px;border-radius:999px;color:#fff;font-size:14px;font-weight:700;
+            background:linear-gradient(135deg,#f05b9e,#d94389);
+            box-shadow:0 6px 16px rgba(217,67,137,.24);transition:.2s;
         }
         .nav-cta:hover{transform:translateY(-2px)}
-        .menu{display:none;border:0;background:none;font-size:24px;cursor:pointer}
+        .menu{
+            display:none;width:42px;height:42px;border:1px solid rgba(217,67,137,.16);
+            border-radius:50%;background:rgba(255,255,255,.8);color:var(--primary-dark);
+            font-size:21px;cursor:pointer;
+        }
 
         /* Hero */
         .hero{padding:92px 0 78px}
@@ -369,14 +378,19 @@ $sources = [
             .hero{padding-top:65px}.hero-card{max-width:470px;margin:auto}
         }
         @media(max-width:650px){
-            .nav-cta{display:none}.menu{display:block}
+            .nav-inner{height:64px;padding:0 10px}
+            .logo-image{width:50px;height:50px;border-radius:14px}
             .links{
-                display:none;position:absolute;top:68px;left:0;right:0;flex-direction:column;gap:0;
-                background:rgba(247,248,252,.97);border-bottom:1px solid var(--line);padding:8px 4%;
+                display:none;position:absolute;top:calc(100% + 10px);left:0;right:0;
+                flex-direction:column;align-items:stretch;gap:4px;padding:10px;
+                border:1px solid rgba(255,255,255,.85);border-radius:22px;
+                background:rgba(255,255,255,.82);backdrop-filter:blur(20px);
+                box-shadow:0 12px 32px rgba(80,45,105,.14);
             }
             .links.open{display:flex}
-            .links a{padding:12px 0}
-            .nav-inner{height:68px}
+            .links a{padding:11px 14px}
+            .nav-cta{display:none}
+            .menu{display:block;margin-left:auto}
             h1{letter-spacing:-2.5px}
             .hero{padding:53px 0 40px}
             section{padding:65px 0}
@@ -403,7 +417,7 @@ $sources = [
             <a href="#ateliers">Ateliers</a>
         </div>
         <a href="index.php#projects" class="nav-cta">← Portfolio</a>
-        <button class="menu" id="menuBtn" aria-label="Menu">☰</button>
+        <button class="menu" id="menuBtn" aria-label="Open menu" aria-controls="navLinks" aria-expanded="false">☰</button>
     </div>
 </nav>
 
@@ -696,8 +710,14 @@ $sources = [
 
     const menuBtn = document.getElementById('menuBtn');
     const navLinks = document.getElementById('navLinks');
-    menuBtn.addEventListener('click', () => navLinks.classList.toggle('open'));
-    navLinks.querySelectorAll('a').forEach(a => a.addEventListener('click', () => navLinks.classList.remove('open')));
+    menuBtn.addEventListener('click', () => {
+        const isOpen = navLinks.classList.toggle('open');
+        menuBtn.setAttribute('aria-expanded', String(isOpen));
+    });
+    navLinks.querySelectorAll('a').forEach(a => a.addEventListener('click', () => {
+        navLinks.classList.remove('open');
+        menuBtn.setAttribute('aria-expanded', 'false');
+    }));
 
     const catCursor = document.querySelector('.cat-cursor');
     const supportsCustomCursor = window.matchMedia(
