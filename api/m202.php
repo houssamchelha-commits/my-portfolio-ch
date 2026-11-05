@@ -337,6 +337,26 @@ $sources = [
         .reveal{opacity:0;transform:translateY(18px);transition:.65s ease}
         .reveal.visible{opacity:1;transform:none}
 
+        .cat-cursor{
+            position:fixed;top:0;left:0;z-index:1000;width:38px;height:38px;
+            pointer-events:none;opacity:0;transform:translate3d(-100px,-100px,0);
+            transition:opacity .15s ease;will-change:transform;
+        }
+        .cat-cursor svg{width:100%;height:100%;filter:drop-shadow(0 3px 5px rgba(201,76,134,.25))}
+        .ribbon-trail{
+            position:fixed;z-index:999;pointer-events:none;font-size:15px;line-height:1;
+            animation:ribbon-float .8s ease-out forwards;will-change:transform,opacity;
+        }
+        @keyframes ribbon-float{
+            0%{opacity:0;transform:translate(-50%,-35%) scale(.65) rotate(-12deg)}
+            18%{opacity:1}
+            100%{opacity:0;transform:translate(-50%,-115%) scale(1.1) rotate(18deg)}
+        }
+        @media (hover:hover) and (pointer:fine) and (prefers-reduced-motion:no-preference){
+            body.has-cat-cursor,body.has-cat-cursor a,body.has-cat-cursor button{cursor:none}
+            body.has-cat-cursor .cat-cursor{opacity:1}
+        }
+
         @media(max-width:900px){
             .hero-grid,.revision,.grid-2{grid-template-columns:1fr}
             .grid-3,.grid-4{grid-template-columns:1fr 1fr}
@@ -651,6 +671,16 @@ $sources = [
     </div>
 </footer>
 
+<div class="cat-cursor" aria-hidden="true">
+    <svg viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M10.2 18.5C7.5 16.7 7.1 12.9 9.1 11.2C11 9.6 13.8 11.2 14.8 14.3C14.4 9.9 16.5 7 19.2 7C22 7 23.3 10.1 22.4 14.3C24.1 10.8 27.3 9.8 29.1 11.7C30.9 13.7 29.6 17.1 26.8 19.1C30.5 18 33 20.4 32.2 23.2C31.5 25.6 28.4 26.7 25.5 25.8C26.1 30.5 23.3 34 19.7 34C16.2 34 13.6 30.7 14.1 26.4C11.2 27.5 8.2 26.3 7.8 23.8C7.4 21.6 8.5 19.6 10.2 18.5Z" fill="#FF8FB7" stroke="#D94F8A" stroke-width="1.5"/>
+        <ellipse cx="12" cy="17.2" rx="2.2" ry="3" transform="rotate(-35 12 17.2)" fill="#FFF7FB"/>
+        <ellipse cx="18.5" cy="13" rx="2" ry="3" fill="#FFF7FB"/>
+        <ellipse cx="26.1" cy="15.8" rx="2.1" ry="3" transform="rotate(28 26.1 15.8)" fill="#FFF7FB"/>
+        <path d="M16.1 22.5C16.1 20.7 18.6 18.9 20 18.9C21.5 18.9 23.9 20.7 23.9 22.5C23.9 24.1 22.3 25.2 20 25.2C17.7 25.2 16.1 24.1 16.1 22.5Z" fill="#FFF7FB"/>
+    </svg>
+</div>
+
 <script>
     const observer = new IntersectionObserver((entries) => {
         entries.forEach(entry => {
@@ -664,6 +694,35 @@ $sources = [
     const navLinks = document.getElementById('navLinks');
     menuBtn.addEventListener('click', () => navLinks.classList.toggle('open'));
     navLinks.querySelectorAll('a').forEach(a => a.addEventListener('click', () => navLinks.classList.remove('open')));
+
+    const catCursor = document.querySelector('.cat-cursor');
+    const supportsCustomCursor = window.matchMedia(
+        '(hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference)'
+    ).matches;
+
+    if (supportsCustomCursor && catCursor) {
+        document.body.classList.add('has-cat-cursor');
+
+        let lastRibbonTime = 0;
+        document.addEventListener('pointermove', event => {
+            if (event.pointerType !== 'mouse') return;
+
+            catCursor.style.transform = `translate3d(${event.clientX - 18}px, ${event.clientY - 18}px, 0)`;
+
+            const now = performance.now();
+            if (now - lastRibbonTime < 110) return;
+            lastRibbonTime = now;
+
+            const ribbon = document.createElement('span');
+            ribbon.className = 'ribbon-trail';
+            ribbon.textContent = '🎀';
+            ribbon.setAttribute('aria-hidden', 'true');
+            ribbon.style.left = `${event.clientX}px`;
+            ribbon.style.top = `${event.clientY}px`;
+            document.body.appendChild(ribbon);
+            ribbon.addEventListener('animationend', () => ribbon.remove(), { once: true });
+        });
+    }
 </script>
 </body>
 </html>
