@@ -189,9 +189,9 @@ $sources = [
         .nav-inner{height:76px;display:flex;align-items:center;justify-content:space-between}
         .logo{display:flex;align-items:center;gap:10px;font-weight:800;letter-spacing:-.5px}
         .logo-mark{
-            width:38px;height:38px;border-radius:12px;display:grid;place-items:center;
-            color:white;background:linear-gradient(135deg,var(--primary),#a98fff);
-            box-shadow:0 10px 24px rgba(118,87,255,.25);
+            font-size:22px;font-weight:850;letter-spacing:-1px;
+            background:linear-gradient(90deg,var(--primary),#b44dff,var(--accent));
+            -webkit-background-clip:text;background-clip:text;color:transparent;
         }
         .links{display:flex;gap:28px;font-size:14px;color:#555b6e;font-weight:600}
         .links a{transition:.2s}
@@ -388,8 +388,7 @@ $sources = [
 <nav class="nav">
     <div class="container nav-inner">
         <a href="index.php" class="logo">
-            <span class="logo-mark">C</span>
-            <span>Chaimae.</span>
+            <span class="logo-mark">Chaimae.</span>
         </a>
         <div class="links" id="navLinks">
             <a href="#manifeste">Manifeste</a>
