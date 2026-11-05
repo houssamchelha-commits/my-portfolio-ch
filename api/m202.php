@@ -532,8 +532,8 @@ $sources = [
             <a href="#kanban">Kanban</a>
             <a href="#ateliers">Ateliers</a>
         </div>
-        <a href="index.php#projects" class="nav-cta">← Portfolio</a>
         <button class="theme-toggle" id="themeToggle" type="button" aria-label="Switch to dark mode" title="Switch to dark mode">☾</button>
+        <a href="index.php#projects" class="nav-cta">← Portfolio</a>
         <button class="menu" id="menuBtn" aria-label="Open menu" aria-controls="navLinks" aria-expanded="false">☰</button>
     </div>
 </nav>

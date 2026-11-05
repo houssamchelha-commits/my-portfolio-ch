@@ -390,8 +390,8 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
             <a href="#ateliers">Ateliers</a>
             <a href="#journey">Journey</a>
         </div>
-        <a href="#contact" class="nav-cta">Let's talk</a>
         <button class="theme-toggle" id="themeToggle" type="button" aria-label="Switch to dark mode" title="Switch to dark mode">☾</button>
+        <a href="#contact" class="nav-cta">Let's talk</a>
         <button class="menu" id="menuBtn" aria-label="Open menu" aria-controls="navLinks" aria-expanded="false">☰</button>
     </div>
 </nav>
